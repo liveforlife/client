@@ -1,0 +1,49 @@
+/* 新增账户、账户编辑、个人信息编辑、企业信息编辑 --- 公共部分样式 */
+.account .el-main{
+  padding-right: 0px;
+}
+
+/* 账户编辑 */
+.account-s-edit .el-form-item {
+  margin-bottom: 18px;
+}
+
+/* 个人信息编辑 */
+.account-edit_user .el-form-item {
+  margin-bottom: 18px;
+}
+
+/* 企业信息编辑 */
+.account-edit_com .el-button{
+    padding: 9px 36px;
+    margin-left: 38px;
+    margin-top: 20px;
+    display: block;
+  }
+  .account-edit_com .el-checkbox-group{
+    height: 30px;
+  }
+  .account-edit_com .el-form-item__label{
+    font-size: 16px;
+  }
+  .account-edit_com .el-form-item {
+    margin-bottom: 18px;
+  }
+  .account-edit_com .file-onload{
+    margin-top: 10px;
+    border: dashed 2px #d7d7d7;
+    padding: 15px;
+    border-radius: 4px;
+  }
+
+  .account-edit_com .el-upload-list--picture-card .el-upload-list__item{
+    margin-bottom: 0;
+  }
+
+  .account-edit_com .el-col-18 .el-form-item__content{
+    line-height: 0;
+  }
+
+  .account-edit_com .warning{
+    border: dashed 2px #DCDFE6;
+  }

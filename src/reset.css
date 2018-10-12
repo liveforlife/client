@@ -1,0 +1,270 @@
+/*去除默认样式*/
+body, html{
+    width:100%;
+    height:100%;
+    background: #ecf0f8;
+    min-width: 1400px;
+}
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, button, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, input, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, select, small, span, strike, strong, sub, summary, sup, table, textarea, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video { margin: 0; padding: 0; box-sizing: border-box; word-break:break-all; }
+h1, h2, h3, h4, h5, h6 { font-weight: normal; }
+i, em, b, strong { font-style: normal; }
+table{ border-collapse:collapse; }
+li{list-style-type:none;}
+body { font: 14px/1.5 "Microsoft YaHei",Arial,Helvetica,sans-serif;}
+a { text-decoration: none; color: inherit; }
+a:focus { outline: none; }
+img { border: none; vertical-align:middle;}
+input, button, select, textarea { outline: none; border: none; font-size: inherit; font-family:inherit; line-height:normal;}
+input.disabled, textarea.disabled { background: #ccc;}
+button.disabled{background: #ccc;color:#fff;}
+button.disabled:hover{background: #ccc;color:#fff;cursor:default;}
+textarea { resize: none; }
+
+/*公共间距*/
+.commonPadding{
+    padding:20px 30px;
+}
+
+/*添加表格样式*/
+/* .add-table-expand{
+    display: flex;
+}
+.add-table-expand .type{
+    color:#13ce66;
+    font-weight: bold;
+}
+.add-table-expand .el-form-item{
+    margin-right:30px;
+}
+.add-table-expand .content{
+    flex:1;
+}
+.add-table-expand .el-button--small{
+    padding-top:0px;
+    height:48px;
+}
+.add_table .el-table__body-wrapper{
+  overflow: hidden;
+} */
+/*隐藏可扩展列*/
+/* .hide-expand .el-table__expand-column .el-icon {
+  display: none;
+} */
+/* .hide-expand + tr .el-table__expanded-cell{
+  padding:0px;
+  border:none;
+  height:0px;
+} */
+/*分页组件*/
+/* .add_pagination{
+    text-align:right;
+    padding-top:10px;
+} */
+/*add-form*/
+.add-checkbox-group .el-checkbox{
+  margin-left:0px;
+  margin-right:10px;
+}
+.center{
+  text-align: center;
+}
+/* 渐变背景的btn */
+.save-btn{
+  width: 124px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+.liner-btn{
+  color: #ffffff;
+  background:rgb(55, 153, 250);
+  border-radius: 4px;
+  cursor: pointer;
+  background: linear-gradient(180deg, rgba(60,226,200,1), rgba(58,147,281,1));
+}
+.liner-btn:hover{
+  color: #ffffff;
+  background: #A1CFFE;
+  background: linear-gradient(180deg, rgb(72, 238, 221), rgb(46, 180, 247));
+}
+.liner-btn:active{
+  border: solid rgb(28, 141, 255) 1px;
+  color: #ffffff;
+  background: #A1CFFE;
+  box-shadow: 0px 0px 10px rgb(55, 153, 250) inset;
+  background: linear-gradient(180deg, rgba(60,226,200,1), rgba(58,147,281,1));
+}
+
+.page-div-content{
+  /*width: 1200px;*/
+  height: 100%;
+  margin: 0 auto;
+}
+.page-div-content  .el-footer{
+  font-size: 12px;
+  text-align: center;
+  line-height: 44px;
+  color: #9a9fa6;
+  background: #ffffff;
+  box-shadow: 2px -2px 2px #e6eaef;
+}
+ .page-div-content>.el-container{
+  height: 100%;
+}
+.page-div-content .is-vertical{
+ height: 100%;
+}
+
+.page-div-content .el-main>div{
+  background: #ffffff;
+}
+.page-div-content .page-home-div>div{
+  background: none;
+}
+.page-div-content .el-header{
+  line-height: 50px;
+  background: #ffffff;
+  box-shadow: 2px 2px 2px #e6eaef;
+}
+.page-div-content .nav-header .nav-header-date{
+  color: #397bf1;
+}
+.page-div-content .el-aside{
+  background: #2d313d;
+  height: 100%;
+  overflow-y:auto;
+}
+.common-color{
+  color: #397bf1;
+}
+/* 图标大小 */
+.icon-s{
+  vertical-align: text-top;
+  padding-right: 6px;
+  font-size: 16px;
+}
+.icon-m{
+  vertical-align: text-top;
+  padding-right: 6px;
+  font-size: 18px;
+}
+.icon-l{
+  vertical-align: text-top;
+  padding-right: 6px;
+  font-size: 20px;
+}
+/* 文字前标*号 */
+.page-div-content .required .el-form-item__label::before{
+  content: '*';
+  color: #f56c6c;
+  margin-right: 4px;
+}
+
+/* a-form-resul表格 */
+.a-form-result{
+  padding-top: 35px;
+}
+.a-form-result table{
+  border-collapse: separate;
+}
+.a-form-result .el-table thead tr{
+  background: #f2f8ff;
+}
+.a-form-result .el-table tr:nth-child(even){
+  background: #e1efff;
+}
+.a-form-result .el-table--border{
+  text-align: center;
+}
+.a-form-result .el-table--border th{
+  text-align: center;
+  color: #4f4f4f;
+  background: #e1efff;
+
+}
+.a-form-result .el-table--border td{
+  border-right: solid #d7d7d7 1px;
+  border-bottom: solid #d7d7d7 1px;
+}
+.a-form-result .el-table--border th{
+  border-right: solid #d7d7d7 1px;
+  border-bottom: solid #d7d7d7 1px;
+  color: #333;
+}
+.a-form-result .el-table--border{
+  border: solid #d7d7d7 1px;
+  border-left: 0;
+  border-right: 0;
+}
+.a-form-result .el-table td{
+  padding: 7px 0;
+  color: #333;
+}
+.a-form-result .el-button--mini{
+  padding: 4px 12px;
+  margin: 3px 2px;
+}
+/* 分页 */
+.a-form-result  .paging{
+  padding: 0 10px;
+  height: 70px;
+  line-height: 70px;
+  border-bottom: solid #d7d7d7 1px;
+}
+.a-form-result .el-pagination{
+  padding: 0 5px;
+  height: 29px;
+  float: right;
+}
+.a-form-result .el-col-13{
+  color: #333333;
+  font-size: 12px;
+}
+.a-form-result .el-col-11{
+  padding: 20px 0;
+}
+.a-form-result .operation{
+  height: 60px;
+  padding: 2px 20px;
+}
+.a-form-result .operation .el-button{
+  width: 100px;
+  height: 32px;
+  padding: 0;
+}
+
+/* 表单 */
+.el-main div.form{
+  /* min-height: 820px; */
+  box-shadow: 0 0px 8px #d9dde2;
+  /* margin-bottom: 20px; */
+  border-radius: 4px;
+  padding: 20px 40px;
+}
+.form .el-form{
+  padding: 0 80px;
+}
+.form .el-form-item--medium .el-form-item__content{
+  padding-left: 4px;
+}
+.form .text{
+  color: #5b5b5b;
+}
+.form .el-button{
+  padding: 9px 36px;
+}
+.form .el-checkbox-group{
+  height: 30px;
+}
+.form .el-form-item__label{
+  font-size: 16px;
+}
+.form .height{
+  margin-bottom: 14px;
+}
+.form .height1{
+  margin-bottom: 4px;
+}
+.form .el-select{
+  width: 100%;
+}

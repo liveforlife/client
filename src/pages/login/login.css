@@ -1,0 +1,161 @@
+.page-login-content{
+   	width: 100%;
+    height: 100%;
+    min-height: 914px;
+    min-width:960px;
+    background: url("../../assets/login/login-bg.png");
+    background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.page-login-content .wrap{
+ height: 760px;
+ width: 100%;
+}
+.page-login-content .loginDiv{
+    width: 440px;
+    height: 570px;
+    padding: 16px;
+    margin-right: 23%;
+    position: absolute;
+    /*right: 410px;*/
+    top: 190px;
+    right: 0;
+    background: #6a80e2;
+    background: linear-gradient(160deg, rgba(106,128,226,0.4), rgba(1,5,41,0.5));
+}
+.page-login-content .loginDiv .content{
+	width: 100%;
+    height: 100%;
+    background-color: #3244be;
+    background-color: rgba(50,68,190,0.3);
+    padding: 20px 50px;
+}
+.page-login-content .loginDiv .forget_Pwd .logo{
+ height: 140px;
+ padding-bottom: 0;
+}
+.page-login-content .loginDiv .forget_Pwd .line{
+ width: 310px;
+ height: 2px;
+ background-image: url("../../assets/login/line.png");
+ background-size: 100% 100%;
+ margin-bottom: 60px;
+}
+.page-login-content .loginDiv .forget_Pwd .line span{
+ font-size: 22px;
+ color: #009cff;
+ position: relative;
+ left:calc(50% - 23.5px) ;
+ bottom:18px;
+}
+.page-login-content .logo{
+	width: 100%;
+	height: 200px;
+	position: relative;
+}
+
+.page-login-content .logo-title{
+    padding: 60px;
+}
+
+.page-login-content .logo img{
+	height: 114px;
+	display: block;
+	margin: 0 auto 20px;
+}
+.page-login-content .logo .title{
+	font-size: 30px;
+	color: #009cff;
+	font-weight: bold;
+}
+
+.page-login-content .el-input__inner{
+    border-radius: 40px;
+    text-align: center;
+    height: 50px;
+    font-size: 16px;
+}
+.page-login-content .short .el-input__inner{
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.page-login-content .short .el-input-group__append{
+    padding: 0;
+}
+
+.page-login-content .short .sms{
+    display: inline-block;
+    padding: 15px 20px;
+}
+
+.page-login-content .el-form-item{
+    margin-bottom: 34px;
+}
+
+.page-login-content .el-form-item__error{
+    padding-top: 6px;
+}
+
+.page-login-content .confirm{
+    width: 100%;
+	height: 50px;
+	line-height: 50px;
+	padding: 0 5%;
+	border-radius: 40px;
+	margin-bottom: 26px;
+	text-align: center;
+	font-size: 20px;
+	color: #9b9b9b;
+	background: #009cff;
+	color: #ffffff;
+    cursor: pointer;
+}
+
+.page-login-content .confirm:hover{
+    background: #47b7fd;
+}
+
+.page-login-content .grid-content{
+    color: #009dff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.page-login-content .grid-content .span:hover{
+    text-decoration: underline ;
+}
+
+.page-login-content .left{
+    text-align: left
+}
+
+.page-login-content .right{
+    text-align: right
+}
+
+.page-login-content .el-input-group__append{
+    border-bottom-right-radius: 40px;
+    border-top-right-radius: 40px;
+    background-color: #009cff;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.page-login-content .el-input-group__append:hover{
+    background-color: #47b7fd;
+}
+
+.page-login-content .copy-right{
+    height:calc(100% - 760px) ;
+    position: relative;
+}
+.page-login-content .copy-right .text{
+ width: 100%;
+ position: absolute;
+ bottom: 10px;
+ text-align: center;
+ font-size: 16px;
+ color: #7c7c7c;
+}
