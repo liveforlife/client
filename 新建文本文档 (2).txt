@@ -1,0 +1,13 @@
+118.126.114.37 
+dengtai
+FTcdfortis123
+
+15008137096 111111
+
+http://192.168.0.123:8081/home.cop/swagger-ui.html#/ 
+
+/home.cop/getUsersByPhone 根据电话号码获取机构信息
+/home.cop/login 根据账号密码登录
+/home.cop/ins/list 获取机构信息列表
+/home.cop/ins/add 添加机构
+/home.cop/ins/del 删除机构
