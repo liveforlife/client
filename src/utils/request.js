@@ -14,9 +14,15 @@ export default {
   imgUpload (params) {
     return Vue.httpClient.post('/image/upload', qs.stringify(params))
   },
-  login (params) {
-    return Vue.httpClient.post('/login', qs.stringify(params))
+  
+  getUsersByPhone(params){
+  	return Vue.httpClient.post('/home.cop/getUsersByPhone',qs.stringify(params))
   },
+
+  login (params) {
+    return Vue.httpClient.post('/home.cop/login', qs.stringify(params))
+  },
+  
   logout (params) {
     return Vue.httpClient.get('/logout', qs.stringify(params))
   },

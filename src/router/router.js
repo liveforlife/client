@@ -46,19 +46,10 @@ const router = new Router({
 })
 
 router.beforeEach(({meta, path,name}, from, next) => {
-  let isLogin=''
-//if(path=='/mobilePayment'||path=='/paymentSuccess'){
-// isLogin=true
-//}else{
-// isLogin=hasAuthToken();
-//}
+  let isLogin=hasAuthToken();
   const isForget = getSSession('hygorgetToken')
   const isRegister = getSSession('hymobile')
-  console.log(isLogin)
-  console.log('999888')
-  console.log(path)
   if (path !== '/login' && !isLogin) {
-   console.log('66666');
     if (path === '/register' || path === '/forgetPwd') {
       next()
       return
@@ -77,9 +68,7 @@ router.beforeEach(({meta, path,name}, from, next) => {
         return next({ path: '/login' })
       }
     } else {
-    	      next()
-      return
-      //return next({ path: '/login' })
+      return next({ path: '/login' })
     }
   }
   if (path === '/login' && isLogin) {
