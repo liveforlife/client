@@ -51,125 +51,147 @@ export function getTime () {
   var newDate = y + '-' + m + '-' + d + ' ' + h + ':' + min + ' ' + week
   return newDate
 }
-/*
- 		传入订单类型id,
- 		返回订单类型名
- * */
-export function getOrderTypeName(typeId){
-		if (typeId === 1) {
-      return '销售订单'
-    } else if (typeId === 2) {
-      return '仓储订单'
-    } else if (typeId === 3) {
-      return '临时订单'
-    } else if(typeId === 7){
-      return '补货单'
-    }else{
-    	return '退换货订单'
+
+export function changeMoneyToChinese (money) {
+  // 汉字的数字
+  var cnNums = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
+  // 基本单位
+  var cnIntRadice = ['', '拾', '佰', '仟']
+  // 对应整数部分扩展单位
+  var cnIntUnits = ['', '万', '亿', '兆']
+  // 对应小数部分单位
+  var cnDecUnits = ['角', '分', '毫', '厘']
+  // var cnInteger = '整' //整数金额时后面跟的字符
+  // 整型完以后的单位
+  var cnIntLast = '元'
+  // 最大处理的数字
+  var maxNum = 999999999999999.9999
+  // 金额整数部分
+  var IntegerNum
+  // 金额小数部分
+  var DecimalNum
+  // 输出的中文金额字符串
+  var ChineseStr = ''
+  // 分离金额后用的数组，预定义
+  var parts = []
+  if (money === '') {
+    return ''
+  }
+  money = parseFloat(money)
+  if (money >= maxNum) {
+    alert('超出最大处理数字')
+    return ''
+  }
+  if (money === 0) {
+    ChineseStr = cnNums[0] + cnIntLast
+    return ChineseStr
+  }
+  // 转换为字符串
+  money = money.toString()
+  if (money.indexOf('.') === -1) {
+    IntegerNum = money
+    DecimalNum = ''
+  } else {
+    parts = money.split('.')
+    IntegerNum = parts[0]
+    DecimalNum = parts[1].substr(0, 4)
+  }
+  if (parseInt(IntegerNum, 10) > 0) {
+    // 获取整型部分转换
+    var zeroCount = 0
+    const IntLen = IntegerNum.length
+    for (let i = 0; i < IntLen; i++) {
+      const n = IntegerNum.substr(i, 1)
+      const p = IntLen - i - 1
+      const q = p / 4
+      const m = p % 4
+      if (n === '0') {
+        zeroCount++
+      } else {
+        if (zeroCount > 0) {
+          ChineseStr += cnNums[0]
+        }
+        zeroCount = 0 // 归零
+        ChineseStr += cnNums[parseInt(n)] + cnIntRadice[m]
+      }
+      if (m === 0 && zeroCount < 4) {
+        ChineseStr += cnIntUnits[q]
+      }
     }
-}
-/*
- 		传入订单类型id,订单状态id
- 		返回订单状态名
- * */
-export function getOrderStatusName(typeId,statusId){
-	switch(statusId){
-		   	case -1 :
-		   		return '已关闭'
-		   		break
-	   		case 0 :
-		   		return '审核中'
-		   		break
-		   	case 1 :
-		   		return '派单中'
-		   		break
-		   	case 2 :
-		   		return '出库中'
-		   		break
-		   	case 4 :
-		   		return '运输中'
-		   		break
-		   	case 5 :
-		   		return '回单中'
-		   		break
-		   	case 6 :
-		   		return '已完成'
-		   		break
-      case 7:
-       return '签收复核'
-		   	case 12 :
-		   		return '返厂中'
-		   		break
-		   	case 11 :
-		   		return '处理中'
-		   		break
-		   	case 14 :
-		   		return '已完成'
-		   		break
-		   }
-}
-/**
-*    精确乘法（去除浮点数引起的误差）
-*/
-export function accMul(arg1,arg2)
-{
- var m=0,s1=arg1.toString(),s2=arg2.toString();
- try{m+=s1.split(".")[1].length}catch(e){}
- try{m+=s2.split(".")[1].length}catch(e){}
- return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
+    ChineseStr += cnIntLast
+    // 整型部分处理完毕
+  }
+  if (DecimalNum !== '') {
+    // 小数部分
+    const decLen = DecimalNum.length
+    for (let i = 0; i < decLen; i++) {
+      const n = DecimalNum.substr(i, 1)
+      if (n !== '0') {
+        ChineseStr += cnNums[Number(n)] + cnDecUnits[i]
+      }
+    }
+  }
+  if (ChineseStr === '') {
+    ChineseStr += cnNums[0] + cnIntLast
+  }
+  return ChineseStr
 }
 
-/**
-*    精确加法（去除浮点数引起的误差）
-*/
-export function accAdd(arg1,arg2){
-
-var r1,r2,m;
-
-try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0}
-
-try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0}
-
-m=Math.pow(10,Math.max(r1,r2))
-
-return (arg1*m+arg2*m)/m
-
+// 对象是否为空
+export function isEmptyObj (obj) {
+  for (const name in obj) {
+    return false
+  }
+  return true
+}
+// 只判断两个值对应相等，不包含引用
+export function isEqual (a, b) {
+  if (JSON.stringify(a) !== JSON.stringify(b)) {
+    return false
+  }
+  return true
+}
+// 节流
+export function throttle (method, duration) {
+  let begin = new Date()
+  return function () {
+    const context = this
+    const args = arguments
+    const current = new Date()
+    if (current - begin >= duration) {
+      method.apply(context, args)
+      begin = current
+    }
+  }
 }
 
-/*
- 		传入 交货要求 字段 ：trpDeliveryWay
- 		返回交货要求 内容 ：trpDeliveryWayName
- * */
-export function getOrderTrpDeliverWayName(id){
-	switch(id){
-	case 1 :
-   return '送货上门'
-   break
-  case 2 :
-   return '营业点自提'
-   break
-  case 3 :
-   return '送货上门代客卸货(平地卸货)'
-   break
-  case 4 :
-   return '送货上门代客卸货(有电梯)'
-   break
-  case 5 :
-   return '送货上门代客卸货(无电梯)'
-   break
- }
+// 去抖
+export function debounce (method, delay) {
+  let timer = null
+  return function () {
+    const context = this
+    const args = arguments
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      method.apply(context, args)
+    }, delay)
+  }
 }
-/*
- 		传入 返单时间 字段 ：trpReturnDateTime(返单时间)  trpExArrivalDate(预计送达时间)
- 		返回返单时间 内容 ：trpReturnDateTimeName
- * */
-export function getOrderTrpReturnDateTime(endTime,startTime){
-	let startDate=new Date(startTime)
-	let endDate=new Date(endTime)
-	let numTime=(endDate-startDate)/(1000*60*60*24)
-	if(numTime<15){
-		return '15天以内'
-	}else{
-		return '暂无要求'
-	}
+export function clearCity (list) {
+  list.forEach(i => {
+    const leav1Childs = i.childs
+    if (leav1Childs) {
+      leav1Childs.forEach(j => {
+        const leav2Childs = j.childs
+        if (leav2Childs) {
+          leav2Childs.forEach(k => {
+            delete k.childs
+          })
+        }
+      })
+    } else {
+      // delete list[i].childs
+    }
+  })
+  return list
 }

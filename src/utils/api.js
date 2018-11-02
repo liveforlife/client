@@ -57,10 +57,10 @@ function endLoading() {
 // 添加请求拦截器
 api.interceptors.request.use((config) => {
   // 带上用户token
-  const authToken = getAuthToken()
-  if (authToken) {
-    config.headers['Authorization'] = authToken
-  }
+//const authToken = getAuthToken()
+//if (authToken) {
+//  config.headers['Authorization'] = authToken
+//}
 //if (config.showLoading) {
 //  showFullScreenLoading()
 // }

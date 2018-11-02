@@ -100,7 +100,7 @@
                 this.openSuccees()
                 
                 this.$nextTick(() => {
-                	this.$router.push({ path: '/Home' })
+                	this.$router.push({ path: '/insList' })
                 })
               } else {
                 this.$message.error(data.message)

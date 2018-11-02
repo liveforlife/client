@@ -4,7 +4,7 @@
         <el-aside>
           <div class="left-nav-menu">
             <div class="logo" v-if="!isCollapse">
-              <img src="../assets/page-logo.png" alt="">
+              <img src="../assets/page-logo.png" alt="" style="width: 0px;">
             </div>
            <el-switch
             v-model="isCollapse">
@@ -70,24 +70,27 @@ import request from '@/utils/request'
       return {
        	menuList:[
           {num: '1', index: '/Home', title: '个人中心', icon: 'icon-userinfo'},
-          {
-            num: '2',
-            title: '账户管理',
-            icon: 'icon-user-manege',
-            subs: [
-              {index: '/accountAdd', title: '新建账户', icon: 'icon-add-user1'},
-              {index: '/accountSearch', title: '账户查询', icon: 'icon-user-search'}
-            ]
-          },
-          {
-            num: '3',
-            title: '客户相关',
-            icon: 'icon-user-manege',
-            subs: [
-              {index: '/customerManageList', title: '客户管理', icon: 'icon-add-user1'},
-              {index: '/', title: '企业管理', icon: 'icon-user-search'}
-            ]
-          },
+          {num:'2',title:'系统相关',icon:'icon-user-manage',subs:[
+          	{index:'/insList',title:'机构管理',icon:'icon-add-user1'}
+          ]}
+//        {
+//          num: '2',
+//          title: '账户管理',
+//          icon: 'icon-user-manege',
+//          subs: [
+//            {index: '/accountAdd', title: '新建账户', icon: 'icon-add-user1'},
+//            {index: '/accountSearch', title: '账户查询', icon: 'icon-user-search'}
+//          ]
+//        },
+//        {
+//          num: '3',
+//          title: '客户相关',
+//          icon: 'icon-user-manege',
+//          subs: [
+//            {index: '/customerManageList', title: '客户管理', icon: 'icon-add-user1'},
+//            {index: '/', title: '企业管理', icon: 'icon-user-search'}
+//          ]
+//        },
         ],
         isCollapse:false
       }

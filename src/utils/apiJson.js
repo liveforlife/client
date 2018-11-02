@@ -58,10 +58,7 @@ function endLoading() {
 // 添加请求拦截器
 api.interceptors.request.use((config) => {
   // 带上用户token
-  const authToken = getAuthToken()
-  if (authToken) {
-    config.headers['Authorization'] = authToken
-  }
+
   if (config.showLoading) {
     showFullScreenLoading()
    }
@@ -77,7 +74,7 @@ api.interceptors.request.use((config) => {
 })
 
 // 添加响应拦截器
-api.interceptors.response.use(response => {
+/*api.interceptors.response.use(response => {
   if (response.config.showLoading) {
     tryHideFullScreenLoading()
    }
@@ -150,7 +147,7 @@ api.interceptors.response.use(response => {
     warn(err.message)
   }
   return Promise.reject(err)
-})
+})*/
 
 // export default api
 export default {

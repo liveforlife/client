@@ -11,14 +11,11 @@ import store from './store'
 import Calendar from 'vue-calendar-component'
 
 import '@/icomoon/style.css'
-import '@/iconFont/iconfont.css'
 import api from './utils/api'
 import apiJson from './utils/apiJson'
 import VueQArt from 'vue-qart'
 
 Vue.use(Calendar)
-
-
 
 
 Vue.config.productionTip = false

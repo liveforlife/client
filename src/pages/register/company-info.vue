@@ -146,7 +146,7 @@
   import navTitle from '@/components/navTitle'
   import request from '@/utils/request'
   import data from '@/utils/pcas-code.json'
-  import { clearCity } from '@/utils/clearCity'
+  import { clearCity } from '@/utils/format'
   import { getSSession } from '@/utils/session'
   import { baseURL } from '@/utils/api'
   export default {
