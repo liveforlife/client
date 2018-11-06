@@ -195,3 +195,36 @@ export function clearCity (list) {
   })
   return list
 }
+
+export function formatCity(data){
+  return data.map(item=>{
+    let obj={}
+    obj.value=item.regionId
+    obj.label=item.regionName
+    obj.children=item.children.map(item=>{
+      let obj={}
+      obj.value=item.regionId
+      obj.label=item.regionName
+       obj.children=[]
+      obj.children=item.children.map(item=>{
+        let obj={}
+        obj.value=item.regionId
+        obj.label=item.regionName
+        //obj.children=[]
+        return obj
+      })
+      return obj
+    })
+
+    return obj
+  })
+}
+
+export function formatSysCodeList(data) {
+  return data.map(item => {
+    let obj = {};
+    obj.label = item.sysDictName;
+    obj.value = item.sysDictCode;
+    return obj;
+  });
+}

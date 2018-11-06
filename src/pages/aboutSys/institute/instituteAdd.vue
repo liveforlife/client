@@ -4,84 +4,113 @@
 			<el-row :span="24">
 				<el-col :span="12">
 					<el-form-item label="企业名称">
-						<el-input :model="instName"></el-input>
+						<el-input v-model="addForm.instName"></el-input>
 					</el-form-item>
 					<el-form-item label="负责人">
-						<el-input :model="director"></el-input>
+						<el-input v-model="addForm.director"></el-input>
 					</el-form-item>
 					<el-form-item label="负责人电话">
-						<el-input :model="directorPhone"></el-input>
+						<el-input v-model="addForm.directorPhone"></el-input>
 					</el-form-item>
 					<el-form-item label="对接人">
-						<el-input :model="broker"></el-input>
+						<el-input v-model="addForm.broker"></el-input>
 					</el-form-item>
 					<el-form-item label="对接人电话">
-						<el-input :model="brokerPhone"></el-input>
+						<el-input v-model="addForm.brokerPhone"></el-input>
 					</el-form-item>
 					<el-form-item label="城市区域">
-						<el-select :model="instARegionId">
-							<option></option>
-						</el-select>
+						<el-cascader
+							:options="regionTreeList"
+							v-model="instARegionIdArry"
+							>
+						</el-cascader>
 					</el-form-item>
 					<el-form-item label="经度">
-						<el-input :model="instGeoLatitude"></el-input>
+						<el-input v-model="addForm.instGeoLatitude"></el-input>
 					</el-form-item>
 					<el-form-item label="纬度">
-						<el-input :model="instGeoLongitude"></el-input>
+						<el-input v-model="addForm.instGeoLongitude"></el-input>
 					</el-form-item>
 					<el-form-item label="业务涵盖">
-						<el-select :model="busiTypes">
-							<option></option>
+						<el-select v-model="addForm.busiTypes" multiple >
+							<el-option 
+								v-for="item in busiTypesList" 
+								:key="item.value" 
+								:label="item.label"
+								:value="item.value"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item label="简介">
-						<el-input type="textarea" :model="instDesc">
+						<el-input type="textarea" v-model="addForm.instDesc">
 						</el-input>
 					</el-form-item>
 				</el-col>
-				  <!--"busiType": [],
-				  "busiTypes": "",
-				  "createTime": "2018-10-22T05:44:51.553Z",
-				  "instId": 0,
-				  "modifiedTime": "2018-10-22T05:44:51.553Z",-->
 				<el-col :span="12">
 					<el-form-item label="成立时间">
 						 <el-date-picker
-					      v-model="instFoundTime"
+					      v-model="addForm.instFoundTime"
 					      type="date"
 					      placeholder="选择日期">
 					    </el-date-picker>
 					</el-form-item>
 					<el-form-item label="入驻时间">
 						 <el-date-picker
-					      v-model="instCreateTime"
+					      v-model="addForm.instCreateTime"
 					      type="date"
 					      placeholder="选择日期">
 					    </el-date-picker>
 					</el-form-item>
 					<el-form-item label="公司性质">
-						<el-input :model="instNature"></el-input>
+						<el-select v-model="addForm.instNature">
+							<el-option
+								v-for="item in instNatureList"
+								:value="item.value"
+								:key="item.value"
+								:label="item.label"
+								></el-option>
+						</el-select>
 					</el-form-item>
 					<el-form-item label="状态">
-						<el-input :model="instStatus"></el-input>
+						<el-select v-model="addForm.instStatus">
+							<el-option
+								v-for="item in instStatusList"
+								:value="item.value"
+								:key="item.value"
+								:label="item.label"
+								></el-option>
+						</el-select>
 					</el-form-item>
 					<el-form-item label="股东数量">
-						<el-input :model="stockholderNum"></el-input>
+						<el-input v-model="addForm.stockholderNum"></el-input>
 					</el-form-item>
 					<el-form-item label="员工数量">
-						<el-input :model="employeeNum"></el-input>
+						<el-input v-model="addForm.employeeNum"></el-input>
 					</el-form-item>
 					<el-form-item label="收费模式">
-						<el-input :model="chargeMode"></el-input>
+						<el-select v-model="addForm.chargeMode">
+							<el-option
+								v-for="item in chargeScaleList"
+								:value="item.value"
+								:key="item.value"
+								:label="item.label"
+								></el-option>
+						</el-select>
 					</el-form-item>
 					<el-form-item label="收费标准">
-						<el-input :model="chargeScale"></el-input>
+						<el-input v-model="addForm.chargeScale"></el-input>
 					</el-form-item>
 					<el-form-item label="合作模式">
-						<el-input :model="cooMode"></el-input>
+						<el-select v-model="addForm.cooMode">
+							<el-option
+								v-for="item in cooModeList"
+								:value="item.value"
+								:key="item.value"
+								:label="item.label"
+								></el-option>
+						</el-select>
 					</el-form-item>
 					<el-form-item label="合作价格">
-						<el-input :model="cooPrice"></el-input>
+						<el-input v-model="addForm.cooPrice"></el-input>
 					</el-form-item>
 				</el-col>
 			</el-row>
@@ -94,65 +123,76 @@
 
 <script>
 	import request from '@/utils/request'
+	import * as format from '@/utils/format'
 	export default{
+		props:['busiTypesList','instStatusList','regionTreeList','isAddFlag'],
 		data(){
 			return{
-				addForm:{
-					/*
-					  "broker": "",
-				  "brokerPhone": 0,
-				  //"busiType": [],
-				  "busiTypes": [],
-				  "chargeMode": "",
-				  "chargeScale": 0,
-				  "cooMode": "",
-				  "cooPrice": 0,
-				 // "createTime": "2018-10-22T05:44:51.553Z",
-				  "director": "",
-				  "directorPhone": 0,
-				  "employeeNum": 0,
-				  "instARegionId": "",
-				  "instCreateTime": "",
-				  "instDesc": "",
-				  "instFoundTime": "2018-10-22T05:44:51.553Z",
-				  "instGeoLatitude": 0,
-				  "instGeoLongitude": 0,
-				  //"instId": 0,
-				  "instName": "",
-				  "instNature": "",
-				  "instStatus": "string",
-				 // "modifiedTime": "2018-10-22T05:44:51.553Z",
-				  "stockholderNum": 0
-					 * */
-				  "broker": "23424",
-				  "brokerPhone":2342,
-				  //"busiType": [],
-				  "busiTypes": ["C0030001"],
-				  "chargeMode": "2342",
-				  "chargeScale": 2342,
-				  "cooMode": "23423",
-				  "cooPrice": 2342,
-				 // "createTime": "2018-10-22T05:44:51.553Z",
-				  "director": "2342",
-				  "directorPhone": 2342,
-				  "employeeNum": 2420,
-				  "instARegionId": "2342",
-				  "instCreateTime": "2342",
-				  "instDesc": "234234",
-				  "instFoundTime": "2018-10-22T05:44:51.553Z",
-				  "instGeoLatitude": 2342,
-				  "instGeoLongitude": 243420,
-				  //"instId": 0,
-				  "instName": "2342",
-				  "instNature": "2342",
-				  "instStatus": "2",
-				 // "modifiedTime": "2018-10-22T05:44:51.553Z",
-				  "stockholderNum": 2340
+				addForm:{					
+				  broker: "",
+				  brokerPhone:"",
+				  busiTypes: [],
+				  chargeMode: "",
+				  chargeScale: 0,
+				  cooMode: "",
+				  cooPrice: 0,
+				  director: "",
+				  directorPhone: "",
+				  employeeNum: "",
+				  instARegionId: "",
+				  instCreateTime: "",
+				  instDesc: "",
+				  instFoundTime: "",
+				  instGeoLatitude: "",
+				  instGeoLongitude: "",
+				  instName: "",
+				  instNature: "",
+				  instStatus: "",
+				  stockholderNum: ""
 				},
+				instARegionIdArry:[],
+				sysCode:[
+					{
+						sysCode:'C0070000',
+						sysName:'合作模式',
+						list:'cooModeList'
+					},{
+						sysCode:'C0060000',
+						sysName:'收费模式',
+						list:'chargeScaleList'
+					},{
+						sysCode:'C0160000',
+						sysName:'企业性质',
+						list:'instNatureList'
+					}
+				],
+				cooModeList:[],
+				chargeScaleList:[],
+				instNatureList:[],
 			}
 		},
+		created () {
+			if(!this.isAddFlag){
+				this.getInstInfo()
+			}
+			this.init()
+		},
 		methods:{
+			init(){
+				request.getDictList({code:'C0070000,C0060000,C0160000'}).then(({data})=>{
+					if(data.success){
+						let {C0070000,C0060000,C0160000}=data.data
+						this.cooModeList=format.formatSysCodeList(C0070000)
+						this.chargeScaleList=format.formatSysCodeList(C0060000)
+						this.instNatureList=format.formatSysCodeList(C0160000)
+					}
+				})	
+			},
+			getInstInfo(){
+				
+			},
 			submitForm(){
+				this.addForm.instARegionId=this.instARegionIdArry[this.instARegionIdArry.length-1]
 				request.addIns(this.addForm).then(({data})=>{
 					
 				})

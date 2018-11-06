@@ -71,12 +71,13 @@ import request from '@/utils/request'
        	menuList:[
           {num: '1', index: '/Home', title: '个人中心', icon: 'icon-userinfo'},
           {num:'2',title:'系统相关',icon:'icon-user-manage',subs:[
-          	{index:'/insList',title:'机构管理',icon:'icon-add-user1'}
+            {index:'/insList',title:'机构管理',icon:'icon-add-user1'},
+            {index:'/induList',title:'企业管理',icon:'icon-add-user1'}
           ]}
 //        {
 //          num: '2',
 //          title: '账户管理',
-//          icon: 'icon-user-manege',
+//          icon: 'icon-user-manege', 
 //          subs: [
 //            {index: '/accountAdd', title: '新建账户', icon: 'icon-add-user1'},
 //            {index: '/accountSearch', title: '账户查询', icon: 'icon-user-search'}

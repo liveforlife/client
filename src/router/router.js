@@ -14,7 +14,7 @@ const PersonInfo = () => import('@/pages/register/person-info')
 const SetPwd = () => import('@/pages/login/setpwd')
 
 const InsList = () => import('@/pages/aboutSys/institute/instituteList')
-
+const InduList = () => import('@/pages/aboutSys/industry/industryList')
 Vue.use(Router)
 
 const router = new Router({
@@ -28,7 +28,8 @@ const router = new Router({
     { path: '',
       component: CommonLayout,
       children: [
-        { path: '/insList', name: '新建账户', component: InsList },
+        { path: '/insList', name: 'InsList', component: InsList },
+        { path: '/induList', name: 'InduList', component: InduList },
       ]
     }
   ]

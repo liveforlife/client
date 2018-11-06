@@ -6,56 +6,66 @@
 		<el-main>
 			<el-row class="queryInsDiv" style="">
 				<el-row>
-					<el-button type="primary" @click="addVisible=true">新增</el-button>
+					<el-button type="primary" @click="addIns">新增</el-button>
 				</el-row>
 				<el-row class="queryInsDivButton" :span="24">
-					<el-form :inline="true" :model="selectForm">
+					<el-form :inline="true" :model="selectForm" ref="selectForm">
 						<el-row :span="24">
 							<el-col :span="6">
 								<el-form-item label="企业名称">
-									<el-input :model="instName"></el-input>
+									<el-input v-model="selectForm.instName"></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="负责人">
-									<el-input :model="director"></el-input>
+									<el-input v-model="selectForm.director"></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="对接人">
-									<el-input :model="broker"></el-input>
+									<el-input v-model="selectForm.broker"></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
 								<el-form-item label="城市区域">
-									<el-select :model="instARegionId">
-										<option></option>
-									</el-select>
+									<el-cascader
+									    :options="regionTreeList"
+									    v-model="regionIdArry"
+									   >
+									  </el-cascader>
 								</el-form-item>
 							</el-col>
 						</el-row>
 						<el-row :span="24">
 							<el-col :span="6">
 								<el-form-item label="业务涵盖">
-									<el-select :model="busiTypes">
-										<option></option>
+									<el-select v-model="selectForm.busiType" placeholder="请选择">
+										<el-option 
+										v-for="item in busiTypesList" 
+										:key="item.value" 
+										:label="item.label"
+										:value="item.value"></el-option>
 									</el-select>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
-								<el-form-item label="状态">
-									<el-input :model="instStatus"></el-input>
+								<el-form-item label="状态" >
+									<el-select v-model="selectForm.instStatus" placeholder="请选择">
+										<el-option
+										v-for="item in instStatusList"
+										:value="item.value"
+										:key="item.value"
+										:label="item.label"
+										></el-option>
+									</el-select>
 								</el-form-item>
 							</el-col>
 							<el-col :span="6">
-								<el-button type="primary" @click="">查询</el-button>
-								<el-button type="primary" @click="">重置</el-button>
+								<el-button type="primary" @click="selectInsList">查询</el-button>
+								<el-button type="primary" @click="clearInsQueryCondition">重置</el-button>
 							</el-col>
-							<el-col></el-col>
-							
 						</el-row>
-					</el-form>
-					
+					</el-form>	
 				</el-row>
 			</el-row>
 			<el-row>
@@ -83,7 +93,7 @@
 			</el-row>
 		</el-main>
 			<el-dialog title="新增" id="addDiv" :visible.sync="addVisible">				
-				<InstituteAdd></InstituteAdd>
+				<InstituteAdd :busiTypesList="busiTypesList" :instStatusList="instStatusList" :regionTreeList="regionTreeList" :isAddFlag="isAddFlag"></InstituteAdd>
 			</el-dialog>
 			<el-dialog title="维护" id="ModifyDiv" :visible.sync="ModifyVisible">	
 				<el-table :data="ModifyList"></el-table>
@@ -99,6 +109,7 @@
 	import InstituteAdd from './instituteAdd'
 	import ModifyAdd from './instituteAdd'
 	import request from '@/utils/request'
+	import * as format from '@/utils/format'
 	export default{
 		components:{
 			InstituteAdd,ModifyAdd
@@ -117,7 +128,25 @@
 					instStatus:'',
 					busiType:'',
 					regionId:'',
+					pageNum:0 ,
+					pageSize:10
 				},
+				regionIdArry:[],
+				regionTreeList:[],
+				sysCode:[
+					{
+						sysCode:'C0030000',
+						sysName:'业务涵盖',
+						list:'busiTypesList'
+					},{
+						sysCode:'C0050000',
+						sysName:'机构状态',
+						list:'instStatusList'
+					}
+				],
+				busiTypesList:[],
+				instStatusList:[],
+				isAddFlag:false,
 			}
 		},
 		created(){
@@ -125,15 +154,40 @@
 		},
 		methods:{
 			init(){
-				request.getInsList({}).then(({data})=>{
-					this.insList=data.data
-				})
+				this.selectInsList()
 				request.getDictList({}).then(({data})=>{
+				})
+				request.getRegionTree({}).then(({data})=>{
+					if(data.success){
+						this.regionTreeList=format.formatCity(data.data)			
+					}
+				})
+				request.getDictList({code:'C0030000,C0050000'}).then(({data})=>{
+					if(data.success){
+						let {C0030000,C0050000}	=data.data
+						this.busiTypesList=format.formatSysCodeList(C0030000)
+						this.instStatusList=format.formatSysCodeList(C0050000)
+						console.log(this.busiTypesList,3333)
+					}
+				})
+			},
+			selectInsList(){
+				console.log(this.regionIdArry.length)
+				if(this.regionIdArry.length !=0){
+					this.selectForm.regionId=this.regionIdArry[this.regionIdArry.length-1]
+				}
+				request.getInsList(this.selectForm).then(({data})=>{
+					this.insList=data.data.list
 				})
 			},
 			addIns(){
+				this.addVisible=true;
+				this.isAddFlag=true;
 			},
-			reviseIns(){},
+			reviseIns(){
+				this.addVisible=true;
+				this.isAddFlag=false;
+			},
 			ModifyIns({row}){
 				let ModifyIns={
 					instId:row.instId
@@ -162,6 +216,14 @@
 						this.$message.error(data.message);
 					}
 				})
+			},
+			clearInsQueryCondition(){
+				this.selectForm.instName=''
+				this.selectForm.director=''
+				this.selectForm.broker=''
+				this.selectForm.instStatus=''
+				this.selectForm.busiType=''
+				this.selectForm.regionId=[]
 			}
 		}
 	}
