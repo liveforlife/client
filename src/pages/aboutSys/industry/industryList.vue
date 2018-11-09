@@ -24,13 +24,13 @@
 					</el-table-column>
 				</el-table>
 			</el-row>
-             <div class="block">
+             <div class="paginationStyle">
                 <span class="demonstration"></span>
                 <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="currentPage4"
-                :page-sizes="[2,15]"
+                :page-sizes="[15]"
                 :page-size="15"
                 layout="total, sizes, prev, pager, next"
                 :total="total">
@@ -38,14 +38,18 @@
             </div>
 		</el-main>
         <el-dialog title="新增" id="addInduDiv" :visible.sync="addInduVisible">				
-				<el-form :model="addInduForm" :ref="addInduForm">
+				<el-form :model="addInduForm" :inline="true" :ref="addInduForm">
                     <el-form-item label="行业名">
-
+						<el-input v-model="addInduForm.indName"></el-input>						
                     </el-form-item>
                     <el-form-item label="描述">
-                        
+						<el-input v-model="addInduForm.indDesc"></el-input>                        
                     </el-form-item>
                 </el-form>
+				<el-row style="text-align: center;">
+					<el-button  size="mini" type="primary" @click="addIndustryRecord">确定</el-button>
+					<el-button  size="mini" type="danger" @click="cancelAddIndustry">取消</el-button>
+				</el-row>
 		</el-dialog>
 	</el-container>
 </template>
@@ -65,10 +69,12 @@
 					pageSize:15
                 },
                 total:'',
-                addInduVisible:false,
+				addInduVisible:false,
+				isAddFlag:false,
                 addInduForm:{
                     indDesc:'',
-                    indName:'',
+					indName:'',
+					indId:''
                 }
 			}
 		},
@@ -85,17 +91,55 @@
 				})
             },
             addIndustry(){
-
+				this.isAddFlag=true
+				this.addInduVisible=true
             },
-			reviseIndustry(){
-
+			addIndustryRecord(){
+				if(this.isAddFlag){
+					request.addIndu(this.addInduForm).then(({data})=>{
+						console.log(data.success)
+						if(data.success){
+							this.init()
+							this.$message.success(data.message)
+							this.addInduVisible=false           
+						}else{
+						this.$message.error(data.message)
+						}
+					})
+				}else{
+					request.undateInduList(this.addInduForm).then(({data})=>{
+						if(data.success){
+							this.init()
+							this.$message.success(data.message)
+							this.cancelAddIndustry()
+						}else{
+						this.$message.error(data.message)
+						}
+					})
+				}
+				
+			},
+			cancelAddIndustry(){
+				this.addInduVisible=false
+				this.isAddFlag=false
+				this.addInduForm.indDesc= ""
+				this.addInduForm.indName= ""
+				this.addInduForm.indId=""
+			},
+			reviseIndustry(val){
+				this.isAddFlag=false
+				this.addInduForm.indDesc= val.indDesc
+				this.addInduForm.indName= val.indName
+				this.addInduForm.indId= val.indId
+				this.addInduVisible=true
             },
             deleteIndustry(row){
                 request.deleteInduList({indId:row.indId}).then(({data})=>{
 					if(data.success){
-                       this.$message.success(data.data.message)
+						this.init()
+                       this.$message.success(data.message)
 					}else{
-                       this.$message.error(data.data.message)
+                       this.$message.error(data.message)
                     }
 				})
             },
@@ -118,8 +162,5 @@
 .industryButton{
 	margin-bottom: 10px;
 }
-.block{
-    text-align: right;
-    padding: 20px 0px
-}
+
 </style>

@@ -116,6 +116,7 @@
 			</el-row>
 			<el-row>
 				<el-button type="primary" @click="submitForm">提交</el-button>
+				<el-button type="primary" @click="cancelForm">取消</el-button>
 			</el-row>
 		</el-form>
 	</div>
@@ -125,7 +126,7 @@
 	import request from '@/utils/request'
 	import * as format from '@/utils/format'
 	export default{
-		props:['busiTypesList','instStatusList','regionTreeList','isAddFlag'],
+		props:['busiTypesList','instStatusList','regionTreeList','isAddFlag','reviseInsForm'],
 		data(){
 			return{
 				addForm:{					
@@ -171,14 +172,21 @@
 				instNatureList:[],
 			}
 		},
-		created () {
-			if(!this.isAddFlag){
-				this.getInstInfo()
-			}
+		mounted () {
 			this.init()
+		},
+		watch:{
+			isAddFlag:function(){
+				this.init()
+			}
 		},
 		methods:{
 			init(){
+				if(!this.isAddFlag){
+					this.addForm=this.reviseInsForm
+				}else{
+					this.clearForm()
+				}
 				request.getDictList({code:'C0070000,C0060000,C0160000'}).then(({data})=>{
 					if(data.success){
 						let {C0070000,C0060000,C0160000}=data.data
@@ -196,6 +204,31 @@
 				request.addIns(this.addForm).then(({data})=>{
 					
 				})
+			},
+			cancelForm(){
+				this.$emit('disappearAddVisible')
+			},
+			clearForm(){
+				this.addForm.broker=''
+				this.addForm.brokerPhone=''
+				this.addForm.busiTypes=[]
+				this.addForm.chargeMode=''
+				this.addForm.chargeScale=0
+				this.addForm.cooMode=''
+				this.addForm.cooPrice=0
+				this.addForm.director=""
+				this.addForm.directorPhone=""
+				this.addForm.employeeNum=''
+				this.addForm.instARegionId=''
+				this.addForm.instCreateTime=''
+				this.addForm.instDesc=''
+				this.addForm.instFoundTime=''
+				this.addForm.instGeoLatitude=''
+				this.addForm.instGeoLongitude=''
+				this.addForm.instName=''
+				this.addForm.instNature=''
+				this.addForm.instStatus=''
+				this.addForm.stockholderNum=''
 			}
 		}
 	}

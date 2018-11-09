@@ -15,6 +15,9 @@ const SetPwd = () => import('@/pages/login/setpwd')
 
 const InsList = () => import('@/pages/aboutSys/institute/instituteList')
 const InduList = () => import('@/pages/aboutSys/industry/industryList')
+const DictList = () => import('@/pages/aboutSys/sysDict/dictList')
+const DepartmentList = () => import('@/pages/aboutStaff/department/departmentList')
+const EmployeeList = () => import('@/pages/aboutStaff/employee/employeeList')
 Vue.use(Router)
 
 const router = new Router({
@@ -30,6 +33,9 @@ const router = new Router({
       children: [
         { path: '/insList', name: 'InsList', component: InsList },
         { path: '/induList', name: 'InduList', component: InduList },
+        { path: '/dictList', name: 'DictList', component: DictList },
+        { path: '/departmentList', name: 'DepartmentList', component: DepartmentList },
+        { path: '/employeeList', name: 'EmployeeList', component: EmployeeList },
       ]
     }
   ]

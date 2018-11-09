@@ -27,7 +27,7 @@ const api = axios.create({
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     // 'Content-Type': 'application/json;charset=UTF-8'
   },
-  showLoading:true
+  //showLoading:true
 })
 let needLoadingRequestCount = 0
 export function showFullScreenLoading() {

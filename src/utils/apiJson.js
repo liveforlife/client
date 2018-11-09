@@ -25,7 +25,6 @@ const api = axios.create({
   timeout: 20000,
   withCredentials: true,
   headers: {
-    // 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     'Content-Type': 'application/json;charset=UTF-8'
   },
   showLoading:true
@@ -58,7 +57,6 @@ function endLoading() {
 // 添加请求拦截器
 api.interceptors.request.use((config) => {
   // 带上用户token
-
   if (config.showLoading) {
     showFullScreenLoading()
    }
@@ -74,7 +72,7 @@ api.interceptors.request.use((config) => {
 })
 
 // 添加响应拦截器
-/*api.interceptors.response.use(response => {
+api.interceptors.response.use(response => {
   if (response.config.showLoading) {
     tryHideFullScreenLoading()
    }
@@ -147,7 +145,7 @@ api.interceptors.request.use((config) => {
     warn(err.message)
   }
   return Promise.reject(err)
-})*/
+})
 
 // export default api
 export default {

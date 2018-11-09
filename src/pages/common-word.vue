@@ -49,7 +49,7 @@
 	                    </template>
                     </el-menu-item-group>
                   </el-submenu>
-                  <el-menu-item :path="item.index" :index="toStr(index)" @click="toLocationchange(item.index)" v-else>
+                  <el-menu-item :path="item.index" :index="toStr(index)" :key="index" @click="toLocationchange(item.index)" v-else>
                     <i :class="item.icon"></i>
                     <span>{{ item.title }}</span>
                   </el-menu-item>
@@ -65,6 +65,7 @@
 <script>
 import {getLSession} from '@/utils/session'
 import request from '@/utils/request'
+import '@/pages/common.css'
   export default {
     data () {
       return {
@@ -72,7 +73,12 @@ import request from '@/utils/request'
           {num: '1', index: '/Home', title: '个人中心', icon: 'icon-userinfo'},
           {num:'2',title:'系统相关',icon:'icon-user-manage',subs:[
             {index:'/insList',title:'机构管理',icon:'icon-add-user1'},
-            {index:'/induList',title:'企业管理',icon:'icon-add-user1'}
+            {index:'/induList',title:'企业管理',icon:'icon-user-search'},
+             {index:'/dictList',title:'企业管理',icon:'icon-add-user1'}
+          ]},
+           {num:'3',title:'员工相关',icon:'icon-user-manege',subs:[
+             {index:'/employeeList',title:'员工管理',icon:'icon-add-user1'},
+            {index:'/departmentList',title:'部门管理',icon:'icon-add-user1'},
           ]}
 //        {
 //          num: '2',

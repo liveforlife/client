@@ -4,7 +4,7 @@
 			
 		</el-header>
 		<el-main>
-			<el-row class="queryInsDiv" style="">
+			<el-row class="queryInsDiv">
 				<el-row>
 					<el-button type="primary" @click="addIns">新增</el-button>
 				</el-row>
@@ -75,12 +75,13 @@
 					<el-table-column label="对接人联系电话" prop="brokerPhone"></el-table-column>
 					<el-table-column label="负责人账号" prop="director"></el-table-column>
 					<el-table-column label="机构入驻日期" prop="instCreateTime"></el-table-column>
-					<el-table-column label="机构性质" prop="instNature"></el-table-column>
+					<el-table-column label="机构性质" prop="instNature">
+					</el-table-column>
 					<el-table-column label="机构简介" prop="instDesc"></el-table-column>
 					<el-table-column label="操作"  width="300">
 						<template  slot-scope="scope">
 							<el-row class="instituButton" style="display: flex;flex-direction: row;">
-								<el-button  size="mini" type="primary" @click="reviseIns">修改</el-button>
+								<el-button  size="mini" type="primary" @click="reviseIns(scope.row)">修改</el-button>
 								<el-button size="mini" type="info" @click="ModifyIns(scope)">维护</el-button>
 								<el-button  size="mini" type="danger" @click="deleteIns(scope)">删除</el-button>
 								<el-button size="mini"  type="success" @click="setIns">设置</el-button>
@@ -91,9 +92,23 @@
 					</el-table-column>
 				</el-table>
 			</el-row>
+			<div class="paginationStyle">
+                <span class="demonstration"></span>
+                <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPage4"
+                :page-sizes="[15]"
+                :page-size="15"
+                layout="total, sizes, prev, pager, next"
+                :total="total">
+                </el-pagination>
+            </div>
 		</el-main>
 			<el-dialog title="新增" id="addDiv" :visible.sync="addVisible">				
-				<InstituteAdd :busiTypesList="busiTypesList" :instStatusList="instStatusList" :regionTreeList="regionTreeList" :isAddFlag="isAddFlag"></InstituteAdd>
+				<InstituteAdd :busiTypesList="busiTypesList" 
+				:instStatusList="instStatusList" :regionTreeList="regionTreeList" 
+				:isAddFlag="isAddFlag" :reviseInsForm="reviseInsForm" v-on:disappearAddVisible = "disappearAddVisible"></InstituteAdd>
 			</el-dialog>
 			<el-dialog title="维护" id="ModifyDiv" :visible.sync="ModifyVisible">	
 				<el-table :data="ModifyList"></el-table>
@@ -131,6 +146,7 @@
 					pageNum:0 ,
 					pageSize:10
 				},
+				total:'',
 				regionIdArry:[],
 				regionTreeList:[],
 				sysCode:[
@@ -142,11 +158,18 @@
 						sysCode:'C0050000',
 						sysName:'机构状态',
 						list:'instStatusList'
+					},
+					{
+						sysCode:'C0160000',
+						sysName:'企业性质',
+						list:'instNatureList'
 					}
 				],
 				busiTypesList:[],
 				instStatusList:[],
+				instNatureList:[],
 				isAddFlag:false,
+				reviseInsForm:{},
 			}
 		},
 		created(){
@@ -159,14 +182,15 @@
 				})
 				request.getRegionTree({}).then(({data})=>{
 					if(data.success){
-						this.regionTreeList=format.formatCity(data.data)			
+						this.regionTreeList=format.formatCity(data.data)		
 					}
 				})
-				request.getDictList({code:'C0030000,C0050000'}).then(({data})=>{
+				request.getDictList({code:'C0030000,C0050000,C0160000'}).then(({data})=>{
 					if(data.success){
-						let {C0030000,C0050000}	=data.data
+						let {C0030000,C0050000,C0160000}	=data.data
 						this.busiTypesList=format.formatSysCodeList(C0030000)
 						this.instStatusList=format.formatSysCodeList(C0050000)
+						this.instNatureList=format.formatSysCodeList(C0160000)
 						console.log(this.busiTypesList,3333)
 					}
 				})
@@ -178,15 +202,21 @@
 				}
 				request.getInsList(this.selectForm).then(({data})=>{
 					this.insList=data.data.list
+					this.total=data.data.total
 				})
 			},
 			addIns(){
 				this.addVisible=true;
 				this.isAddFlag=true;
 			},
-			reviseIns(){
+			reviseIns(val){
 				this.addVisible=true;
 				this.isAddFlag=false;
+				let obj={...val}
+				this.reviseInsForm=obj;
+			},
+			disappearAddVisible(){
+				this.addVisible=false
 			},
 			ModifyIns({row}){
 				let ModifyIns={
@@ -224,7 +254,22 @@
 				this.selectForm.instStatus=''
 				this.selectForm.busiType=''
 				this.selectForm.regionId=[]
-			}
+			},
+			formatterInstNature(row,column){
+				return instNatureList.filter(item=>{
+					if(item.sysDictCode == row.instNature){
+						return item.sysDictName
+					}
+				})
+			},
+			handleSizeChange(val){
+                this.selectForm.pageSize=val
+                this.init()
+            },
+            handleCurrentChange(val){
+                this.selectForm.pageNum=val
+                this.init()
+            }
 		}
 	}
 </script>
