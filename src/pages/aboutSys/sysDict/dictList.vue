@@ -4,15 +4,24 @@
 			
 		</el-header>
 		<el-main>
-             <div>
-                <el-tree
-                    :data="data3"
-                    show-checkbox
-                    node-key="id"
-                    :default-expanded-keys="[2, 3]"
-                    :default-checked-keys="[5]">
-                    </el-tree>
-            </div>
+      <el-row style="padding:10px">
+        <el-button type="primary" size="mini">新增</el-button>
+        <el-button type="primary" size="mini">修改</el-button>
+        <el-button type="primary" size="mini">删除</el-button>
+        <el-button type="primary" size="mini">启用</el-button>
+        <el-button type="primary" size="mini">禁用</el-button>
+        <el-button type="primary" size="mini">查看</el-button>
+      </el-row>
+      <div >
+        <div style="width:400px;padding-left:10px">
+          <el-tree
+              :data="dicListData"
+              show-checkbox
+              node-key="id"
+              check-strictly="true">
+              </el-tree>
+        </div>
+      </div>
 		</el-main>
 </el-container>
    
@@ -22,49 +31,46 @@ import request from '@/utils/request'
   export default {
     data() {
       return {
-        data3: [{
-          id: 1,
-          label: '一级 2',
-          children: [{
-            id: 3,
-            label: '二级 2-1',
-            children: [{
-              id: 4,
-              label: '三级 3-1-1'
-            }, {
-              id: 5,
-              label: '三级 3-1-2',
-              disabled: true
-            }]
-          }, {
-            id: 2,
-            label: '二级 2-2',
-            disabled: true,
-            children: [{
-              id: 6,
-              label: '三级 3-2-1'
-            }, {
-              id: 7,
-              label: '三级 3-2-2',
-              disabled: true
-            }]
-          }]
-        }],
-        defaultProps: {
-          children: 'children',
-          label: 'label'
-        }
+        dicListData: [],
       };
     },
     mounted(){
         this.init()
     },
     methods:{
-        init(){
-            request.getDictTree({}).then(({data}) =>{
+      init(){
+          request.getDictTree({}).then(({data}) =>{
+              if(data.success){
+                this.dicListData=data.data.map((item)=>{
+                  var obj={}
+                  obj.label=item.sysDictName
+                  obj.code=item.sysDictCode
+                  obj.status=item.sysDictStatus
+                  obj.children=item.children.map((item)=>{
+                    var chilObj={}
+                    chilObj.label=item.sysDictName
+                    chilObj.code=item.sysDictCode
+                    chilObj.status=item.sysDictStatus
+                    chilObj.children=item.children
+                    return chilObj
+                  })
+                  return obj
+                })
+              }
+          })
+      },
+      addDictPoint(){
 
-            })
-        }
+      },
+      changeDictStatus(){
+
+      },
+      queryDictInfo(){
+
+      },
+      deleteDictInfo(){
+
+      }
     }
   };
 </script>
